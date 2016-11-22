@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tabs">
+        <item>今日热点</item>
+        <item>国际新闻</item>
+        <item>及时快讯</item>
+        <item>美女图片</item>
+        <item>政经要闻</item>
+        <item>体育赛事</item>
+        <item>茶余饭后</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DragRecyclerView">
+        <attr name="show_decoration" format="boolean"/>
+        <attr name="drag_enable" format="boolean"/>
+        <attr name="show_drag_animation" format="boolean"/>
+    </declare-styleable>
+</resources>
