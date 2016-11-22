@@ -56,13 +56,15 @@ public class DragRecyclerView extends RecyclerView {
     ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            // 监听方向
+            if (!dragEnable) {
+                return ItemTouchHelper.ACTION_STATE_IDLE;
+            }
             if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
                 final int dragFlag = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-                return makeMovementFlags(dragFlag, 0);
+                return makeMovementFlags(dragFlag, ItemTouchHelper.ACTION_STATE_IDLE);
             } else {
                 final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-                final int swipeFlags = 0;
+                final int swipeFlags = ItemTouchHelper.ACTION_STATE_IDLE;
                 return makeMovementFlags(dragFlags, swipeFlags);
             }
         }
@@ -79,7 +81,7 @@ public class DragRecyclerView extends RecyclerView {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            // 侧滑
+
         }
 
         @Override
@@ -185,30 +187,39 @@ public class DragRecyclerView extends RecyclerView {
         revertAnimation.start();
     }
 
-    public DragRecyclerView setDragEnable(boolean dragEnable) {
+    public DragRecyclerView dragEnable(boolean dragEnable) {
         this.dragEnable = dragEnable;
         return this;
     }
 
-    public DragRecyclerView setShowDragAnimation(boolean showDragAnimation) {
+    public DragRecyclerView showDragAnimation(boolean showDragAnimation) {
         this.showDragAnimation = showDragAnimation;
         return this;
     }
 
-    public void setDragAdapter(OnItemChangeListener dragBaseAdapter) {
+    public DragRecyclerView setDragAdapter(OnItemChangeListener dragBaseAdapter) {
         if (dragBaseAdapter instanceof Adapter) {
             this.adapter = dragBaseAdapter;
-            if (dragEnable) {
-                touchHelper.attachToRecyclerView(this);
-            }
+            touchHelper.attachToRecyclerView(this);
             setAdapter((Adapter) adapter);
         } else {
             throw new IllegalArgumentException();
         }
+        return this;
     }
+
+    public DragRecyclerView bindEvent(HoldTouchHelper.OnItemTouchEvent onItemTouchEvent) {
+        HoldTouchHelper.bind(this, onItemTouchEvent);
+        return this;
+    }
+
 
     public void startDrag(ViewHolder viewHolder) {
         touchHelper.startDrag(viewHolder);
+    }
+
+    public void startDrag(int position) {
+        touchHelper.startDrag(getChildViewHolder(getChildAt(position)));
     }
 
 }

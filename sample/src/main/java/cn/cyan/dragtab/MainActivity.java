@@ -10,14 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.cyan.dragrecyclerview.DragRecyclerView;
+import cn.cyan.dragrecyclerview.HoldTouchHelper;
 import cn.cyan.dragtab.tab.DividerGridItemDecoration;
 import cn.cyan.dragtab.tab.Tab;
 import cn.cyan.dragtab.tab.TabAdapter;
 
 public class MainActivity extends AppCompatActivity {
-
-    private DragRecyclerView dragRecyclerView;
-    private TabAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,31 +25,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTabs() {
-        dragRecyclerView = (DragRecyclerView) findViewById(R.id.drvTab);
-        adapter = new TabAdapter(this, getTabs());
+        DragRecyclerView dragRecyclerView = (DragRecyclerView) findViewById(R.id.drvTab);
         // 网格线
         dragRecyclerView.addItemDecoration(new DividerGridItemDecoration());
         // 不固定大小
         dragRecyclerView.setHasFixedSize(false);
-        /** 布局管理器 支持linerLayout风格 */
+        // 布局管理器
         dragRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        // 是否可拖动、是否显示拖动动画
-        dragRecyclerView.setDragEnable(true).setShowDragAnimation(true).setDragAdapter(adapter);
-        // 绑定事件
-        HoldTouchHelper.bind(dragRecyclerView, onItemTouchEventListener);
+
+        /** 自定义属性 */
+        dragRecyclerView
+                .dragEnable(true)
+                .showDragAnimation(true)
+                .setDragAdapter(new TabAdapter(this, getTabs()))
+                .bindEvent(onItemTouchEvent);
     }
 
-    HoldTouchHelper.OnItemTouchEventListener onItemTouchEventListener = new HoldTouchHelper.OnItemTouchEventListener() {
+    HoldTouchHelper.OnItemTouchEvent onItemTouchEvent = new HoldTouchHelper.OnItemTouchEvent() {
         @Override
         public void onLongPress(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int position) {
-            if (adapter.onItemDrag(position)) {
-                dragRecyclerView.startDrag(viewHolder);
+            if (((TabAdapter) recyclerView.getAdapter()).onItemDrag(position)) {
+                ((DragRecyclerView) recyclerView).startDrag(position);
             }
         }
 
         @Override
         public void onItemClick(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int position) {
-            String tab = adapter.getUsing().get(position).getName();
+            String tab = ((TabAdapter) recyclerView.getAdapter()).getUsing().get(position).getName();
             Toast.makeText(MainActivity.this, tab, Toast.LENGTH_SHORT).show();
         }
     };

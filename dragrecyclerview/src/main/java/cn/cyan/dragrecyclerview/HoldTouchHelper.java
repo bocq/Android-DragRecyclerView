@@ -1,4 +1,4 @@
-package cn.cyan.dragtab;
+package cn.cyan.dragrecyclerview;
 
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.RecyclerView;
@@ -15,22 +15,22 @@ import android.view.View;
 public class HoldTouchHelper {
 
     private RecyclerView recyclerView;
-    private OnItemTouchEventListener onItemTouchEventListener;
+    private OnItemTouchEvent onItemTouchEvent;
     private GestureDetectorCompat detector;
 
 
-    private HoldTouchHelper(RecyclerView view, OnItemTouchEventListener listener) {
+    private HoldTouchHelper(RecyclerView view, OnItemTouchEvent event) {
         this.recyclerView = view;
-        this.onItemTouchEventListener = listener;
+        this.onItemTouchEvent = event;
 
         GestureDetector.SimpleOnGestureListener simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                if (onItemTouchEventListener != null) {
+                if (onItemTouchEvent != null) {
                     View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
                     if (child != null) {
                         RecyclerView.ViewHolder vh = recyclerView.getChildViewHolder(child);
-                        onItemTouchEventListener.onItemClick(recyclerView, vh, vh.getAdapterPosition());
+                        onItemTouchEvent.onItemClick(recyclerView, vh, vh.getAdapterPosition());
                     }
                 }
                 return true;
@@ -41,7 +41,7 @@ public class HoldTouchHelper {
                 View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
                 if (child != null) {
                     RecyclerView.ViewHolder vh = recyclerView.getChildViewHolder(child);
-                    onItemTouchEventListener.onLongPress(recyclerView, vh, vh.getAdapterPosition());
+                    onItemTouchEvent.onLongPress(recyclerView, vh, vh.getAdapterPosition());
                 }
             }
         };
@@ -67,13 +67,13 @@ public class HoldTouchHelper {
         recyclerView.addOnItemTouchListener(onItemTouchListener);
     }
 
-    public interface OnItemTouchEventListener {
+    public interface OnItemTouchEvent {
         void onLongPress(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int position);
 
         void onItemClick(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int position);
     }
 
-    public static void bind(RecyclerView view, OnItemTouchEventListener listener) {
-        new HoldTouchHelper(view, listener);
+    public static void bind(RecyclerView view, OnItemTouchEvent event) {
+        new HoldTouchHelper(view, event);
     }
 }
