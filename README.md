@@ -1,5 +1,5 @@
 # Android-DragRecyclerView
-基于RecyclerView实现的可拖动按钮组，支持Grid及List风格。
+基于RecyclerView实现的可拖动按钮组，支持Grid及List风格。Based on the RecyclerView implementation of the drag button group, support for Grid and List style.
 
 ### Demo
 ![demo](http://i.imgur.com/hi1LrTx.gif)
