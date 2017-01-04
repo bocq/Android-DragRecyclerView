@@ -4,12 +4,12 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cn.cyan.dragtab.MainActivity">
+    tools:context="cn.cyan.sample.base.MainActivity">
 
-   <cn.cyan.dragrecyclerview.DragRecyclerView
-       android:id="@+id/drvTab"
+   <FrameLayout
+       android:id="@+id/container"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
-   </cn.cyan.dragrecyclerview.DragRecyclerView>
+   </FrameLayout>
 </RelativeLayout>

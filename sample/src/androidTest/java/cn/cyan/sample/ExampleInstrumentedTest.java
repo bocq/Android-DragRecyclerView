@@ -1,4 +1,4 @@
-package cn.cyan.dragtab;
+package cn.cyan.sample;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

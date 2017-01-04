@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="tabs">
-        <item>今日热点</item>
-        <item>国际新闻</item>
-        <item>及时快讯</item>
-        <item>美女图片</item>
-        <item>政经要闻</item>
-        <item>体育赛事</item>
-        <item>茶余饭后</item>
+    <string-array name="grid_array">
+        <item>@string/hot</item>
+        <item>@string/news_international</item>
+        <item>@string/news</item>
+        <item>@string/beauty</item>
+        <item>@string/politics</item>
+        <item>@string/sports</item>
+        <item>@string/gossip</item>
+    </string-array>
+
+
+    <string-array name="list_array">
+        <item>A day is a miniature of eternity.</item>
+        <item>Miracles sometimes occur, but one has to work terribly for them. </item>
+        <item>It takes two to make a quarrel.</item>
+        <item>Beware beginning.</item>
+        <item>Miss the songs have a one and alone with in.</item>
+        <item>all or nothing, now or never.</item>
     </string-array>
 
 </resources>

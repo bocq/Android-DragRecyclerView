@@ -1,4 +1,4 @@
-package cn.cyan.dragtab;
+package cn.cyan.sample;
 
 import org.junit.Test;
 

@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">DragTab</string>
+    <string name="app_name">DragRecyclerView</string>
+    <string name="grid">Grid</string>
+    <string name="list">List</string>
+    <string name="hot">今日热点</string>
+    <string name="news_international">国际新闻</string>
+    <string name="news">及时快讯</string>
+    <string name="beauty">美女图片</string>
+    <string name="politics">政经要闻</string>
+    <string name="sports">体育赛事</string>
+    <string name="gossip">茶余饭后</string>
+    <string name="more">添加更多</string>
 </resources>

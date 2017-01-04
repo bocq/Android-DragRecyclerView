@@ -1,4 +1,4 @@
-package cn.cyan.dragtab.tab;
+package cn.cyan.sample.base;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,9 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Desc : 网格线
- * User : Cyan(baocq@maritech.cn)
- * New  : 2016/9/28 8:45
+ * User : Cyan(newbeeeeeeeee@gmail.com)
+ * Date : 2017/1/4
  */
 public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -27,7 +26,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         a.recycle();
     }
 
-    public DividerGridItemDecoration(int color) {
+    private DividerGridItemDecoration(int color) {
         mDivider = new ColorDrawable(color);
     }
 
@@ -41,7 +40,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         drawVertical(c, parent);
     }
 
-    public void drawHorizontal(Canvas c, RecyclerView parent) {
+    private void drawHorizontal(Canvas c, RecyclerView parent) {
         int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
@@ -57,7 +56,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    public void drawVertical(Canvas c, RecyclerView parent) {
+    private void drawVertical(Canvas c, RecyclerView parent) {
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);

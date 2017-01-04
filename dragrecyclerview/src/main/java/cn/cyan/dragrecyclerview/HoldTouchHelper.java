@@ -7,11 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Desc : 拦截 recyclerView 单击/长按事件
- * User : Cyan(baocq@maritech.cn)
- * New  : 2016/11/21 13:09
+ * User : Cyan(newbeeeeeeeee@gmail.com)
+ * Date : 2016/9/28
  */
-
 public class HoldTouchHelper {
 
     private RecyclerView recyclerView;

@@ -14,17 +14,13 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
 /**
- * Desc : 可拖动recyclerView
- * User : Cyan(baocq@maritech.com)
- * New  : 2016/9/21 14:27
+ * User : Cyan(newbeeeeeeeee@gmail.com)
+ * Date : 2016/9/28
  */
 public class DragRecyclerView extends RecyclerView {
 
-    /* 适配器 */
     private OnItemChangeListener adapter;
-    /* 是否可拖动 */
     private boolean dragEnable;
-    /* 是否显示拖动动画 */
     private boolean showDragAnimation;
 
 
@@ -50,9 +46,6 @@ public class DragRecyclerView extends RecyclerView {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // 拖动监听
-    ///////////////////////////////////////////////////////////////////////////
     ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -71,9 +64,7 @@ public class DragRecyclerView extends RecyclerView {
 
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            // 原位置
             int oldPosition = viewHolder.getAdapterPosition();
-            // 目标位置
             int targetPosition = target.getAdapterPosition();
             adapter.onItemMoved(oldPosition, targetPosition);
             return false;
@@ -91,14 +82,12 @@ public class DragRecyclerView extends RecyclerView {
 
         @Override
         public boolean isLongPressDragEnabled() {
-            // 禁用,使用自定义触摸监听
             return false;
         }
 
         @Override
         public void onChildDraw(Canvas c, RecyclerView recyclerView, ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                //滑动时改变Item的透明度
                 final float alpha = 1 - Math.abs(dX) / (float) viewHolder.itemView.getWidth();
                 viewHolder.itemView.setAlpha(alpha);
                 viewHolder.itemView.setTranslationX(dX);
@@ -110,10 +99,7 @@ public class DragRecyclerView extends RecyclerView {
         @Override
         public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
             if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-                /** item已经被拽起(托起状态) */
-                // 设置背景
                 viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
-                // 放大动画
                 if (showDragAnimation) zoomView(viewHolder.itemView);
             }
             super.onSelectedChanged(viewHolder, actionState);
@@ -122,52 +108,31 @@ public class DragRecyclerView extends RecyclerView {
         @Override
         public void clearView(RecyclerView recyclerView, ViewHolder viewHolder) {
             super.clearView(recyclerView, viewHolder);
-            // 还原item的样式
             viewHolder.itemView.setAlpha(1.0f);
             viewHolder.itemView.setBackgroundColor(Color.WHITE);
-            // 缩放动画
             if (showDragAnimation) revertView(viewHolder.itemView);
         }
 
         @Override
         public boolean canDropOver(RecyclerView recyclerView, ViewHolder current, ViewHolder target) {
-            /** 被禁用的位置不会被挤兑 */
-            return adapter.onItemDrag(target.getAdapterPosition());
+            return adapter.onItemDrop(target.getAdapterPosition());
         }
     });
 
-    /* 放大动画 */
     private ScaleAnimation zoomAnimation = new ScaleAnimation(1.0f, 1.1f, 1.0f, 1.1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-    /* 还原动画 */
     private ScaleAnimation revertAnimation = new ScaleAnimation(1.1f, 1.0f, 1.1f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
-    /**
-     * 放大
-     *
-     * @param v 视图
-     */
     private void zoomView(final View v) {
         v.setAnimation(zoomAnimation);
-        // 动画执行完停留位置
         zoomAnimation.setFillAfter(true);
-        // 动画持续时间
         zoomAnimation.setDuration(200);
-        // 开始
         zoomAnimation.start();
     }
 
-    /**
-     * 还原
-     *
-     * @param v 视图
-     */
     private void revertView(final View v) {
         v.setAnimation(revertAnimation);
-        // 动画执行完停留位置
         revertAnimation.setFillAfter(true);
-        // 动画持续时间
         revertAnimation.setDuration(400);
-        // 执行监听
         revertAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -175,7 +140,6 @@ public class DragRecyclerView extends RecyclerView {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                /** 动画结束后清除效果 */
                 v.clearAnimation();
             }
 
@@ -183,7 +147,6 @@ public class DragRecyclerView extends RecyclerView {
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        // 开始
         revertAnimation.start();
     }
 
@@ -197,16 +160,18 @@ public class DragRecyclerView extends RecyclerView {
         return this;
     }
 
+
     public DragRecyclerView setDragAdapter(OnItemChangeListener dragBaseAdapter) {
         if (dragBaseAdapter instanceof Adapter) {
             this.adapter = dragBaseAdapter;
             touchHelper.attachToRecyclerView(this);
-            setAdapter((Adapter) adapter);
+            super.setAdapter((Adapter) adapter);
         } else {
             throw new IllegalArgumentException();
         }
         return this;
     }
+
 
     public DragRecyclerView bindEvent(HoldTouchHelper.OnItemTouchEvent onItemTouchEvent) {
         HoldTouchHelper.bind(this, onItemTouchEvent);
