@@ -3,7 +3,7 @@
 
 ### Demo
 
-![demo](http://i.imgur.com/DtjRlef.gif)
+![demo](http://i.imgur.com/0l8Dnbx.gif)
 
 
 ### Usage
