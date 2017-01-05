@@ -2,11 +2,9 @@
 基于RecyclerView实现的可拖动列表，支持Grid及List风格。A draggable list based on the RecyclerView implementation that supports the Grid and List styles.
 
 ### Demo
-##### Grid
-![grid](http://i.imgur.com/t7EyzGs.gif)
 
-##### List
-![list](http://i.imgur.com/qRzK9Ga.gif)
+![demo](http://i.imgur.com/DtjRlef.gif)
+
 
 ### Usage
 
@@ -14,18 +12,22 @@
     compile 'cn.cyan.dragrecyclerview:dragrecyclerview:1.0.3'
 
 ##### Setup 2
+
     <cn.cyan.dragrecyclerview.DragRecyclerView
        android:id="@+id/drv"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>
+
 ##### Setup 3
 
     dragRecyclerView
                 .dragEnable(true)
                 .showDragAnimation(true)
-                .setDragAdapter(adapter(data))
+                .setDragAdapter(adapter(data)) // The adapter must implement OnItemChangeListener
                 .bindEvent(onItemTouchEvent);
+
 ### License
+
     Copyright 2016 Cyan
     
     Licensed under the Apache License, Version 2.0 (the "License");
